@@ -1,9 +1,9 @@
 package com.codewithdurgesg.blog.payloads;
 
-import com.codewithdurgesg.blog.entities.Comment;
 import lombok.*;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter

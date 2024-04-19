@@ -17,45 +17,46 @@ import java.util.List;
 public class BlogAppApisApplication implements CommandLineRunner {
 
 
-	public static void main(String[] args) {
-		SpringApplication.run(BlogAppApisApplication.class, args);
-	}
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+    public static void main(String[] args) {
+        SpringApplication.run(BlogAppApisApplication.class, args);
+    }
 
-	@Autowired
-	private RoleRepo roleRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-	@Bean
-	public ModelMapper modelMapping() {
-		return new ModelMapper();
-	}
+    @Autowired
+    private RoleRepo roleRepo;
 
-	@Override
-	public void run(String... args) throws Exception {
-	System.out.println(this.passwordEncoder.encode("Gaurav@90"));
+    @Bean
+    public ModelMapper modelMapping() {
+        return new ModelMapper();
+    }
 
-	try{
-		Role role1=new Role();
-		role1.setId(AppConstant.ADMIN_USER);
-		role1.setName("ADMIN_USER");
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println(this.passwordEncoder.encode("Gaurav@90"));
 
-		Role role2=new Role();
-		role2.setId(AppConstant.NORMAL_USER);
-		role2.setName("NORMAL_USER");
+        try {
+            Role role1 = new Role();
+            role1.setId(AppConstant.ADMIN_USER);
+            role1.setName("ADMIN_USER");
 
-		List<Role> roles=List.of(role1,role2);
-		List<Role> result=this.roleRepo.saveAll(roles);
+            Role role2 = new Role();
+            role2.setId(AppConstant.NORMAL_USER);
+            role2.setName("NORMAL_USER");
 
-		result.forEach((r)->{
-			System.out.println(r.getName());
-		});
+            List<Role> roles = List.of(role1, role2);
+            List<Role> result = this.roleRepo.saveAll(roles);
+
+            result.forEach((r) -> {
+                System.out.println(r.getName());
+            });
 
 
-	}catch(Exception e){
+        } catch (Exception e) {
 
-		System.out.println("Already Entered");
-		e.printStackTrace();
-	}
-	}
+            System.out.println("Already Entered");
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,15 +1,12 @@
 package com.codewithdurgesg.blog.entities;
 
-import jakarta.persistence.*;
-import jakarta.persistence.ManyToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.engine.internal.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -45,15 +42,12 @@ public class User implements UserDetails {
 	inverseJoinColumns= @JoinColumn(name="role",referencedColumnName = "id") )
 	private Set<Role> role=new HashSet<>();
 
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<SimpleGrantedAuthority> authority=this.role.stream().map((roles)->new SimpleGrantedAuthority(roles.getName())).collect(Collectors.toList());
 
 		return authority;
 	}
-
-
 
 	@Override
 	public String getUsername() {

@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Service("PostServiceImpl")
 public class PostServiceImpl implements PostService{
 
     @Autowired

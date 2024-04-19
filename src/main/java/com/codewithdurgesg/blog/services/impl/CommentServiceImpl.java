@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Service("CommentServiceImpl")
 public class CommentServiceImpl implements CommentService {
     @Autowired
     private PostRepo postRepo;

@@ -1,20 +1,14 @@
 package com.codewithdurgesg.blog.entities;
 
 //import jakarta.persistence.*;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.Set;
+import lombok.Data;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+import javax.persistence.*;
+
+@Data
 @Entity
-@Table(name="comment")
+@Table(name = "comment")
 public class Comment {
 
     @Id

@@ -4,7 +4,6 @@ import com.codewithdurgesg.blog.Security.JwtAuthResponse;
 import com.codewithdurgesg.blog.Security.JwtTokenHelper;
 import com.codewithdurgesg.blog.payloads.JwtAuthRequest;
 import com.codewithdurgesg.blog.payloads.UserDTO;
-import com.codewithdurgesg.blog.repositories.UserRepo;
 import com.codewithdurgesg.blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -33,28 +35,29 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> createToken(
             @RequestBody JwtAuthRequest jwtAuthRequest
-            ) throws Exception {
+    ) throws Exception {
         this.authenticate(jwtAuthRequest.getUsername(), jwtAuthRequest.getPassword());
-        UserDetails userDetails=this.userDetailsService.loadUserByUsername(jwtAuthRequest.getUsername());
-        String token=this.jwtTokenHelper.generateToken(userDetails);
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(jwtAuthRequest.getUsername());
+        String token = this.jwtTokenHelper.generateToken(userDetails);
 
-        JwtAuthResponse response=new JwtAuthResponse();
+        JwtAuthResponse response = new JwtAuthResponse();
         response.setToken(token);
         return new ResponseEntity<JwtAuthResponse>(response, HttpStatus.OK);
     }
+
     @PostMapping("/post/users")
-    public ResponseEntity<UserDTO> registerNewUser(@RequestBody UserDTO userDto){
-        UserDTO user=this.userService.registerNewUser(userDto);
-        return new ResponseEntity<>(user,HttpStatus.CREATED);
+    public ResponseEntity<UserDTO> registerNewUser(@RequestBody UserDTO userDto) {
+        UserDTO user = this.userService.registerNewUser(userDto);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     private void authenticate(String username, String password) throws Exception {
-        UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(username,password);
-       try {
-           this.authenTicationManager.authenticate(authenticationToken);
-       }catch(BadCredentialsException e){
-           System.out.println("Invalid details!!");
-           throw new Exception("Invalid username or password!!!");
-       }
-       }
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        try {
+            this.authenTicationManager.authenticate(authenticationToken);
+        } catch (BadCredentialsException e) {
+            System.out.println("Invalid details!!");
+            throw new Exception("Invalid username or password!!!");
+        }
+    }
 }

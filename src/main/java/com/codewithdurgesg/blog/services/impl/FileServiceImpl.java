@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-@Service
+@Service("FileServiceImpl")
 public class FileServiceImpl implements FileService {
 
     @Override

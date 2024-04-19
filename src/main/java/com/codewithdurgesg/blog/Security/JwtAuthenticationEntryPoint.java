@@ -11,9 +11,9 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
-//    2nd step to implement jwt. Whaen unauthorize person try to access it then these method call automatically and throws exception.
+    //    2nd step to implement jwt. Whaen unauthorize person try to access it then these method call automatically and throws exception.
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Access Denied!!");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied!!");
     }
 }

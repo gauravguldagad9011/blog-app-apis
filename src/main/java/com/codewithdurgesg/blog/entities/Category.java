@@ -2,18 +2,13 @@ package com.codewithdurgesg.blog.entities;
 
 //import jakarta.persistence.*;
 //import jakarta.validation.constraints.NotEmpty;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import lombok.Data;
+
+import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Entity
 @Table(name="category")
 public class Category {

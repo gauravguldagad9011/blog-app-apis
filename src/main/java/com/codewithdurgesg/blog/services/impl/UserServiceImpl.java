@@ -17,7 +17,7 @@ import com.codewithdurgesg.blog.repositories.UserRepo;
 import com.codewithdurgesg.blog.services.UserService;
 import com.codewithdurgesg.blog.entities.User;
 
-@Service
+@Service("UserServiceImpl")
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepo userRepo;

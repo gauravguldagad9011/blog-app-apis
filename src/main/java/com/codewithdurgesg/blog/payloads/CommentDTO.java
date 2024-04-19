@@ -1,6 +1,5 @@
 package com.codewithdurgesg.blog.payloads;
 
-import com.codewithdurgesg.blog.entities.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -2,6 +2,8 @@ package com.codewithdurgesg.blog.repositories;
 
 import com.codewithdurgesg.blog.entities.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CategoryRepo extends JpaRepository<Category,Integer> {
+@Repository("CategoryRepo")
+public interface CategoryRepo extends JpaRepository<Category, Integer> {
 }

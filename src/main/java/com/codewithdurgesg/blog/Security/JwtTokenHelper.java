@@ -14,35 +14,36 @@ import java.util.function.Function;
 @Component
 public class JwtTokenHelper {
 
-//    3rs Step of jwt authentication. We can also copy that class from google. It is used to operate token
-    public static final long JWT_TOKEN_VALIDITY=5*60*60;
-    private String secret="jwtTokenKey";
+    //    3rs Step of jwt authentication. We can also copy that class from google. It is used to operate token
+    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    private String secret = "jwtTokenKey";
 
-    public String getUsernameFromToken(String token){
+    public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
-    public Date getExpirationDateFromToken (String token){
-        return getClaimFromToken(token,Claims::getExpiration);
+    public Date getExpirationDateFromToken(String token) {
+        return getClaimFromToken(token, Claims::getExpiration);
     }
 
-    public <T> T getClaimFromToken(String token, Function<Claims,T> claimsResolver){
-        final Claims claims=getAllClaimsFromToken(token);
+    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
 
-    private Claims getAllClaimsFromToken(String token){
+    private Claims getAllClaimsFromToken(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
-//    check if the tokens are expired
-    private Boolean isTokenExpired(String token){
-        final Date expiration=getExpirationDateFromToken(token);
+    //    check if the tokens are expired
+    private Boolean isTokenExpired(String token) {
+        final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
-    public String generateToken(UserDetails userDetails){
-        Map<String,Object> claims=new HashMap<>();
-        return doGenerateToken(claims,userDetails.getUsername());
+
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        return doGenerateToken(claims, userDetails.getUsername());
     }
 
 //    while creating the token
@@ -51,17 +52,17 @@ public class JwtTokenHelper {
 //    3- According to JWS compack serializationb(Https://toole.ietf.org?html?draft-ietf-jose)
 //    Compaction  of the JWT to a URL safe string
 
-    private String doGenerateToken(Map<String,Object>claims,String subject){
-    return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis()
-            +JWT_TOKEN_VALIDITY*100))
-            .signWith(SignatureAlgorithm.HS512,secret).compact();
+    private String doGenerateToken(Map<String, Object> claims, String subject) {
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()
+                        + JWT_TOKEN_VALIDITY * 100))
+                .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
-//    Validate Token
-    public Boolean ValidateToken(String token,UserDetails userDetails){
-        final String username=getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()))&& !isTokenExpired(token);
+    //    Validate Token
+    public Boolean ValidateToken(String token, UserDetails userDetails) {
+        final String username = getUsernameFromToken(token);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
 
     }
 }
